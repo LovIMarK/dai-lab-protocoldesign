@@ -42,7 +42,7 @@ The client sends a request message in the format:
   ```
 
 - **OPERATION**: Specifies the arithmetic operation (`ADD` or `MULTIPLY`).
-- **VALUE1 and VALUE2**: Integers representing the operands for the calculation.
+- **VALUE1 and VALUE2**: Integers representing the operands for the calculation. **Negative values are not allowed.**
 
 **Examples**:
 - `ADD 10 20\n` (addition of 10 and 20)
