@@ -37,7 +37,7 @@ public class Server {
                     String clientInput;
                     while ((clientInput = in.readLine()) != null) {
                         if (clientInput.equals("EXIT")) {
-                            out.write("Goodbye!" + "\n");
+                            out.write("GOODBYE" + "\n");
                             out.flush();
                             break;
                         }
@@ -46,7 +46,7 @@ public class Server {
 
                         // Check if the request is well-formed
                         if (parts.length != 3) {
-                            out.write("Error: Malformed request"+ "\n");
+                            out.write("ERROR: Malformed request"+ "\n");
                             out.flush();
                             continue;
                         }
@@ -64,7 +64,7 @@ public class Server {
 
 
                         } catch (NumberFormatException e) {
-                            out.write("Error: Operands must be integers" + "\n");
+                            out.write("ERROR: Operands must be integers" + "\n");
                             out.flush();
                         }
                     }
@@ -89,11 +89,11 @@ public class Server {
     private String arithmetic(String operation, int value1, int value2) {
         switch (operation) {
             case "ADD":
-                return "Result: " + (value1 + value2);
+                return "RESULT " + (value1 + value2);
             case "MULTIPLY":
-                return "Result: " + (value1 * value2);
+                return "RESULT " + (value1 * value2);
             default:
-                return "Error: Unsupported operation";
+                return "ERROR: Unsupported operation";
         }
     }
 }
