@@ -35,6 +35,12 @@ public class Server {
                     // Read client input and handle operations
                     String clientInput;
                     while ((clientInput = in.readLine()) != null) {
+                        if (clientInput.equals("QUIT")) {
+                            out.write("Goodbye!" + "\n");
+                            out.flush();
+                            break;
+                        }
+
                         String[] parts = clientInput.split(" ");
 
                         // Check if the request is well-formed
