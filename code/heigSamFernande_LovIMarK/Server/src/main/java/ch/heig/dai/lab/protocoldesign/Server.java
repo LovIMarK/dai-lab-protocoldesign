@@ -32,10 +32,11 @@ public class Server {
                     out.write("Welcome! Supported operations: ADD, MULTIPLY" + "\n" );
                     out.flush();
 
+
                     // Read client input and handle operations
                     String clientInput;
                     while ((clientInput = in.readLine()) != null) {
-                        if (clientInput.equals("QUIT")) {
+                        if (clientInput.equals("EXIT")) {
                             out.write("Goodbye!" + "\n");
                             out.flush();
                             break;
@@ -57,6 +58,8 @@ public class Server {
                             // Call the arithmetic method to process the request
                             String response = arithmetic(operation, value1, value2);
                             out.write(response + "\n");
+                            out.flush();
+                            out.write("Type EXIT to quit" + "\n");
                             out.flush();
 
 
