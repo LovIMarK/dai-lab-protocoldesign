@@ -41,12 +41,14 @@ The client sends a request message in the format:
   OPERATION VALUE1 VALUE2\n
   ```
 
-- **OPERATION**: Specifies the arithmetic operation (`ADD` or `MULTIPLY`).
+- **OPERATION**: Specifies the arithmetic operation (`ADD` or `MULTIPLY`) or EXIT to end the session.
 - **VALUE1 and VALUE2**: Integers representing the operands for the calculation. **Negative values are not allowed.**
 
 **Examples**:
 - `ADD 10 20\n` (addition of 10 and 20)
 - `MULTIPLY 5 3\n` (multiplication of 5 and 3)
+- `EXIT\n` (terminate the session)
+
 
 ### Response Message (Server to Client)
 The server responds based on the validity of the client’s request.
@@ -54,6 +56,11 @@ The server responds based on the validity of the client’s request.
 - **Success Response**:
 - `Result: RESULT_VALUE\n`
   **Example**: `Result: 30\n`
+
+- **Exit Response**:
+- `Goodbye!\n`
+- **Example**: `Goodbye!\n`
+  
 
 - **Error Responses**:
 - **Unsupported Operation**: If the operation is invalid, the server returns:
@@ -83,6 +90,10 @@ The server responds based on the validity of the client’s request.
 - **Server**: `Welcome! Supported operations: ADD, MULTIPLY\n`
 - **Client**: `MULTIPLY 5\n`
 - **Server**: `Error: Malformed request\n`
+
+**Example 4 - Exit Command**
+- **Client**: `EXIT\n`
+- **Server**: `Goodbye!\n` (then closes the connection)
 
 
 
