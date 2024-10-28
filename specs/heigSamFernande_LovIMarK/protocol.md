@@ -18,7 +18,7 @@ The protocol includes agreements on encoding, message format, and error handling
 
 ## 2.Transport Layer Protocol
 - **Protocol**: TCP for reliable data transmission.
-- **Port**: The server listens on port `54321`.
+- **Port**: The server listens on port `1234`.
 
 ### Connection
 - **Setup**: The client initiates a connection to the server’s IP address and specified port.
