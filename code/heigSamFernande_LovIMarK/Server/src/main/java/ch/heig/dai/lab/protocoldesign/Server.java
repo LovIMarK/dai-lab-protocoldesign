@@ -2,7 +2,6 @@ package ch.heig.dai.lab.protocoldesign;
 
 import java.io.*;
 import java.net.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 
@@ -27,7 +26,7 @@ public class Server {
                                      clientSocket.getInputStream(), StandardCharsets.UTF_8));
                      var out = new BufferedWriter(
                              new OutputStreamWriter(
-                                     clientSocket.getOutputStream(),StandardCharsets.UTF_8 ))){
+                                     clientSocket.getOutputStream(), StandardCharsets.UTF_8))) {
 
                     // Send welcome message with supported operations
                     out.write("Welcome! Supported operations: ADD, MULTIPLY" + "\n" );
