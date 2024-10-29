@@ -59,9 +59,6 @@ public class Server {
                             String response = arithmetic(operation, value1, value2);
                             out.write(response + "\n");
                             out.flush();
-                            out.write("Type EXIT to quit" + "\n");
-                            out.flush();
-
 
                         } catch (NumberFormatException e) {
                             out.write("ERROR: Operands must be integers" + "\n");
