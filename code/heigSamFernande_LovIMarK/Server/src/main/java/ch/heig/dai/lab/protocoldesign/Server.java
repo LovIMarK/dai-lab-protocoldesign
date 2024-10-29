@@ -21,10 +21,10 @@ public class Server {
 
             while (true) {
                 try (Socket clientSocket = serverSocket.accept();
-                     var in = new BufferedReader(
+                     BufferedReader in = new BufferedReader(
                              new InputStreamReader(
                                      clientSocket.getInputStream(), StandardCharsets.UTF_8));
-                     var out = new BufferedWriter(
+                     BufferedWriter out = new BufferedWriter(
                              new OutputStreamWriter(
                                      clientSocket.getOutputStream(), StandardCharsets.UTF_8))) {
 
