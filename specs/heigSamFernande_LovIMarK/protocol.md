@@ -54,22 +54,22 @@ The client sends a request message in the format:
 The server responds based on the validity of the client’s request.
 
 - **Success Response**:
-- `Result: RESULT_VALUE\n`
+- `RESULT RESULT_VALUE\n`
   **Example**: `Result: 30\n`
 
 - **Exit Response**:
-- `Goodbye!\n`
+- `GOODBYE\n`
 - **Example**: `Goodbye!\n`
   
 
 - **Error Responses**:
 - **Unsupported Operation**: If the operation is invalid, the server returns:
   ```
-  Error: Unsupported operation\n
+  ERROR: Unsupported operation\n
   ```
 - **Malformed Request**: If the format is incorrect, the server returns:
   ```
-  Error: Malformed request\n
+  ERROR: Malformed request\n
   ```
 
 ---
@@ -79,21 +79,21 @@ The server responds based on the validity of the client’s request.
 **Example 1 - Successful Operation**
 - **Server**: `Welcome! Supported operations: ADD, MULTIPLY\n`
 - **Client**: `ADD 15 25\n`
-- **Server**: `Result: 40\n`
+- **Server**: `RESULT 40\n`
 
 **Example 2 - Invalid Operation**
 - **Server**: `Welcome! Supported operations: ADD, MULTIPLY\n`
 - **Client**: `SUBTRACT 10 5\n`
-- **Server**: `Error: Unsupported operation\n`
+- **Server**: `ERROR: Unsupported operation\n`
 
 **Example 3 - Malformed Request**
 - **Server**: `Welcome! Supported operations: ADD, MULTIPLY\n`
 - **Client**: `MULTIPLY 5\n`
-- **Server**: `Error: Malformed request\n`
+- **Server**: `ERROR: Malformed request\n`
 
 **Example 4 - Exit Command**
 - **Client**: `EXIT\n`
-- **Server**: `Goodbye!\n` (then closes the connection)
+- **Server**: `GOODBYE\n` (then closes the connection)
 
 
 
