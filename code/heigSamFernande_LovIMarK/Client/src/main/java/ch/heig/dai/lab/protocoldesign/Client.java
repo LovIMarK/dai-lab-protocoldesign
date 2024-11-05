@@ -5,94 +5,63 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class Client {
-    final String SERVER_ADDRESS = "127.0.0.1";
-    final int SERVER_PORT = 1234;
+    private final String SERVER_ADDRESS = "127.0.0.1";
+    private final int SERVER_PORT = 1234;
 
     public static void main(String[] args) {
-        new Client().run();
+        Client client = new Client();
+        client.run();
     }
+
 
     private void run() {
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8))) {
+             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
+             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in))) {
 
-            // Welcome message
+            // Displays the server's welcome message
             System.out.println(in.readLine());
 
+            String command;
             while (true) {
-                // Read the user's command
-                String command = getUserCommand();
+                System.out.print("Enter a command (or QUIT to quit): ");
+                command = consoleReader.readLine(); // Reads command from user input
 
-                // Check if the user wants to quit
-                if (command == null) {
-                    disconnect(out);
+                if (command == null || command.trim().equalsIgnoreCase("QUIT")) {
+                    sendCommand(out, "QUIT"); // Sends quit command to server
+                    System.out.println("Disconnecting from the server.");
                     break;
                 }
 
-                // Send the command to the server
-                out.write(command + "\n");
-                out.flush();
-
-                // Read and handle the server's response
-                String response = in.readLine();
-                if (!handleResponse(response)) {
-                    break;
-                }
+                sendCommand(out, command); // Sends user command to server
+                System.out.println(readResponse(in)); // Reads and displays server response
             }
         } catch (IOException e) {
-            System.err.println("Error connecting to the server: " + e.getMessage());
+            System.err.println("Error: Unable to connect to the server - " + e.getMessage());
         }
     }
 
     /**
-     * Reads the user's command and checks if it is "QUIT".
+     * Sends a command to the server.
      *
-     * @return the user's command or null if the user wants to quit
+     * @param out     BufferedWriter to send data to the server
+     * @param command The command to send
+     * @throws IOException if an I/O error occurs
      */
-    private String getUserCommand() {
-        System.out.print("Enter a command (or QUIT to quit): ");
-        String command = System.console().readLine();
-        return (command == null || command.trim().equalsIgnoreCase("QUIT")) ? null : command;
-    }
-
-    /**
-     * Sends a disconnect command to the server and displays a message.
-     *
-     * @param out the output stream to the server
-     * @throws IOException if an IO error occurs
-     */
-    private void disconnect(BufferedWriter out) throws IOException {
-        out.write("QUIT\n");
+    private void sendCommand(BufferedWriter out, String command) throws IOException {
+        out.write(command + "\n");
         out.flush();
-        System.out.println("Disconnecting from the server.");
     }
 
-
     /**
-     * Handles the server's response and displays an appropriate message based on the error code.
+     * Reads the server's response.
      *
-     * @param response the server's response
-     * @return true if the connection should continue, false if it should end
+     * @param in BufferedReader to receive data from the server
+     * @return The server's response as a string
+     * @throws IOException if an I/O error occurs
      */
-    private boolean handleResponse(String response) {
-        switch (response) {
-            case "400":
-                System.out.println("ERROR: Malformed request. Please follow the format: OPERATION VALUE1 VALUE2.");
-                break;
-            case "401":
-                System.out.println("ERROR: Unsupported operation. Use ADD or MULTIPLY.");
-                break;
-            case "402":
-                System.out.println("ERROR: Operands must be integers.");
-                break;
-            case "0":
-                System.out.println("GOODBYE!");
-                return false; // Indicates that the connection should end
-            default:
-                System.out.println(response);
-                break;
-        }
-        return true;
+    private String readResponse(BufferedReader in) throws IOException {
+        return in.readLine();
     }
 }
