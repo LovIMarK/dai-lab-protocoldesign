@@ -7,6 +7,12 @@ import java.nio.charset.StandardCharsets;
 
 public class Server {
     final int SERVER_PORT = 1234;
+    private static final String WELCOME_MESSAGE = "WELCOME! Supported operations: ADD, MULTIPLY\n";
+    private static final String GOODBYE_MESSAGE = "GOODBYE\n";
+    private static final String ERROR_MALFORMED = "ERROR: Malformed request\n";
+    private static final String ERROR_OPERANDS = "ERROR: Operands must be integers\n";
+    private static final String ERROR_UNSUPPORTED = "ERROR: Unsupported operation\n";
+
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -29,15 +35,15 @@ public class Server {
                                      clientSocket.getOutputStream(), StandardCharsets.UTF_8))) {
 
                     // Send welcome message with supported operations
-                    out.write("Welcome! Supported operations: ADD, MULTIPLY" + "\n" );
+                    out.write(WELCOME_MESSAGE);
                     out.flush();
 
 
                     // Read client input and handle operations
                     String clientInput;
                     while ((clientInput = in.readLine()) != null) {
-                        if (clientInput.equals("EXIT")) {
-                            out.write("GOODBYE" + "\n");
+                        if (clientInput.equals("QUIT")) {
+                            out.write(GOODBYE_MESSAGE);
                             out.flush();
                             break;
                         }
@@ -46,7 +52,7 @@ public class Server {
 
                         // Check if the request is well-formed
                         if (parts.length != 3) {
-                            out.write("ERROR: Malformed request"+ "\n");
+                            out.write(ERROR_MALFORMED);
                             out.flush();
                             continue;
                         }
@@ -61,7 +67,7 @@ public class Server {
                             out.flush();
 
                         } catch (NumberFormatException e) {
-                            out.write("ERROR: Operands must be integers" + "\n");
+                            out.write(ERROR_OPERANDS);
                             out.flush();
                         }
                     }
@@ -90,7 +96,7 @@ public class Server {
             case "MULTIPLY":
                 return "RESULT " + (value1 * value2);
             default:
-                return "ERROR: Unsupported operation";
+                return ERROR_UNSUPPORTED;
         }
     }
 }
