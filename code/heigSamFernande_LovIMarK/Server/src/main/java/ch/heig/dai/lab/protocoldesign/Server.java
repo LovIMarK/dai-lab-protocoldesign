@@ -1,5 +1,6 @@
 package ch.heig.dai.lab.protocoldesign;
 
+
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -19,6 +20,7 @@ public class Server {
         Server server = new Server();
         server.run();
     }
+
 
 
     private void run() {
