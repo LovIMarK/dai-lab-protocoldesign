@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Server {
     final int SERVER_PORT = 1234;
-    private static final String WELCOME_MESSAGE = "WELCOME! Supported operations: ADD, MULTIPLY\n";
+    private static final String WELCOME_MESSAGE = "WELCOME! Supported operations: ADD, MULTIPLY (QUIT)\n";
     private static final String GOODBYE_MESSAGE = "GOODBYE\n";
     private static final String ERROR_MALFORMED = "ERROR: Malformed request\n";
     private static final String ERROR_OPERANDS = "ERROR: Operands must be integers\n";
