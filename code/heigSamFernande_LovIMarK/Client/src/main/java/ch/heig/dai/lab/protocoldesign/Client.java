@@ -78,19 +78,19 @@ public class Client {
     private boolean handleResponse(String response) {
         switch (response) {
             case "400":
-                System.out.println("Error: Malformed request. Please follow the format: OPERATION VALUE1 VALUE2.");
+                System.out.println("ERROR: Malformed request. Please follow the format: OPERATION VALUE1 VALUE2.");
                 break;
             case "401":
-                System.out.println("Error: Unsupported operation. Use ADD or MULTIPLY.");
+                System.out.println("ERROR: Unsupported operation. Use ADD or MULTIPLY.");
                 break;
             case "402":
-                System.out.println("Error: Operands must be integers.");
+                System.out.println("ERROR: Operands must be integers.");
                 break;
             case "0":
-                System.out.println("Goodbye!");
+                System.out.println("GOODBYE!");
                 return false; // Indicates that the connection should end
             default:
-                System.out.println("Server response: " + response);
+                System.out.println(response);
                 break;
         }
         return true;
