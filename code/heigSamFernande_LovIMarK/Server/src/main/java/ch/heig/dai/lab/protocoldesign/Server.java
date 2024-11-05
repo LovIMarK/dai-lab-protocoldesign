@@ -37,7 +37,7 @@ public class Server {
                     String clientInput;
                     while ((clientInput = in.readLine()) != null) {
                         if (clientInput.equals("EXIT")) {
-                            out.write("0\n"); // Code 0 = Successful exit
+                            out.write("GOODBYE" + "\n");
                             out.flush();
                             break;
                         }
@@ -46,12 +46,10 @@ public class Server {
 
                         // Check if the request is well-formed
                         if (parts.length != 3) {
-                            out.write("400\n"); // Code 400 = Malformed request
+                            out.write("ERROR: Malformed request"+ "\n");
                             out.flush();
                             continue;
                         }
-
-
                         String operation = parts[0].toUpperCase();
                         try {
                             int value1 = Integer.parseInt(parts[1]);
@@ -63,7 +61,7 @@ public class Server {
                             out.flush();
 
                         } catch (NumberFormatException e) {
-                            out.write("402\n"); // Code 402 = Non-integer operands
+                            out.write("ERROR: Operands must be integers" + "\n");
                             out.flush();
                         }
                     }
@@ -92,7 +90,7 @@ public class Server {
             case "MULTIPLY":
                 return "RESULT " + (value1 * value2);
             default:
-                return "401"; // Code 401 = Unsupported operation
+                return "ERROR: Unsupported operation";
         }
     }
 }
