@@ -17,25 +17,18 @@ public class Client {
     private void run() {
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
-             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in))) {
+             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8)){
 
-            // Displays the server's welcome message
-            System.out.println(in.readLine());
 
             String command;
             while (true) {
-                System.out.print("Enter a command (or QUIT to quit): ");
-                command = consoleReader.readLine(); // Reads command from user input
+                command = readLine(); // Reads command from user input
 
                 if (command == null || command.trim().equalsIgnoreCase("QUIT")) {
                     sendCommand(out, "QUIT"); // Sends quit command to server
-                    System.out.println("Disconnecting from the server.");
                     break;
                 }
-
                 sendCommand(out, command); // Sends user command to server
-                System.out.println(readResponse(in)); // Reads and displays server response
             }
         } catch (IOException e) {
             System.err.println("Error: Unable to connect to the server - " + e.getMessage());
